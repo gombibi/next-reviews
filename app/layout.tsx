@@ -28,6 +28,7 @@ export default function RootLayout({ children }: LayoutProps) {
           <a href='http://rawg.io/' target='_blank'>
             RAWG
           </a>
+          {' '} Deployed on Vercel
         </footer>
       </body>
     </html>
