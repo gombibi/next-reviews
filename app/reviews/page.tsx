@@ -14,7 +14,7 @@ export default async function ReviewsPage() {
       <ul className='flex flex-row flex-wrap gap-3'>
         {reviews.map(review => (
           <Card
-            key={review.slug}
+            slug={review.slug}
             href={`/reviews/${review.slug}`}
             imgSrc={review.image}
             title={review.title}

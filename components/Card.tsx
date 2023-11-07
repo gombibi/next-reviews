@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 interface cardProps {
-  key: string;
+  slug: string;
   href: string;
   imgSrc: string;
   title: string;
@@ -10,7 +10,7 @@ interface cardProps {
 export default function Card(props: cardProps) {
   return (
     <li
-      key={props.key}
+      key={props.slug}
       className='bg-white border rounded shadow w-80 hover:shadow-xl'
     >
       <Link href={props.href}>
