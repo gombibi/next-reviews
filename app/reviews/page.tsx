@@ -1,6 +1,6 @@
 import Heading from "components/Heading";
 import Card from "components/Card";
-import { getReviews } from "lib/reviews";
+import { Review, getReviews } from "lib/reviews";
 
 export const metadata = {
   title: 'Reviews',
@@ -12,7 +12,7 @@ export default async function ReviewsPage() {
     <>
       <Heading>Reviews</Heading>
       <ul className='flex flex-row flex-wrap gap-3'>
-        {reviews.map(review => (
+        {reviews.map((review: Review) => (
           <Card
             slug={review.slug}
             href={`/reviews/${review.slug}`}

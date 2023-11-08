@@ -7,5 +7,13 @@ module.exports = {
   //serve를 통해 간단하게 웹서버 환경에서 테스트를 할 수 있다(npx serve@latest out)
   //Netlify에 out 폴더를 업로드하여 배포 가능
   //import from Git like Vercel or option to deploy manually by uploading a folder using drag and drop
-  // output: 'export',
+
+  //static file을 loading하지 않고, CMS를 통해 data를 fetching하여도 여전히 static export 가능!
+  //All our pages are statically generated including the dynamic route
+  //All the data will be fetched during the build.
+  //--test : npm run build 시 Route 경로에 페이지들이 미리 생성된 것을 확인할 수 있음
+  //--locally test : npx serve@latest out
+  //All the content for each review has been incorporated into the HTML for each page during the build.
+  //So, when running the static website, we don't actually need access to the API.
+  output: 'export',
 };
