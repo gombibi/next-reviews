@@ -12,12 +12,14 @@ export default async function ReviewsPage() {
     <>
       <Heading>Reviews</Heading>
       <ul className='flex flex-row flex-wrap gap-3'>
-        {reviews.map((review: Review) => (
+        {reviews.map((review: Review, index) => (
           <Card
+            key={review.slug}
             slug={review.slug}
             href={`/reviews/${review.slug}`}
             imgSrc={review.image}
             title={review.title}
+            index={index}
           />
         ))}
       </ul>

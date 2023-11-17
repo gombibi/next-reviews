@@ -15,5 +15,20 @@ module.exports = {
   //--locally test : npx serve@latest out
   //All the content for each review has been incorporated into the HTML for each page during the build.
   //So, when running the static website, we don't actually need access to the API.
-  output: 'export',
+  // output: 'export',
+
+  //Image Optimization API
+  //1. Next js provides different image URLs.. the browser decides which one to load based on the screen type.
+  //2. image type converting from jpeg to WebP(동일한 품질이어도 파일 용량이 훨씬 작음)
+  //2. loading="lazy"
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '1337',
+        pathname: '/uploads/**'
+      }
+    ]
+  }
 };
