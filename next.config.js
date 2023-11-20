@@ -21,17 +21,18 @@ module.exports = {
   //1. Next js provides different image URLs.. the browser decides which one to load based on the screen type.
   //2. image type converting from jpeg to WebP(동일한 품질이어도 파일 용량이 훨씬 작음)
   //2. loading="lazy"
-  remotePatterns: [
-    {
-      protocol: 'http',
-      hostname: 'localhost',
-      port: '1337',
-      pathname: '/uploads/**',
-    },
-  ],
-  //with static lendering(output: 'export'옵션)
-  // images: {
-  //   unoptimized: true,          //not running a Next.js server, image optimization 사용못함, but fetchpriority, lazy loading 가능
-  //   loader: 'custom',           //managing digital assets
-  //   loaderFile: 'my-loader.js'  //pointing to the js file with my code. return a string(url)
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '1337',
+        pathname: '/uploads/**',
+      },
+    ],
+    //  with static lendering(output: 'export'옵션)
+    //  unoptimized: true,          //not running a Next.js server, image optimization 사용못함, but fetchpriority, lazy loading 가능
+    //  loader: 'custom',           //managing digital assets
+    //  loaderFile: 'my-loader.js'  //pointing to the js file with my code. return a string(url)
+  },
 };
