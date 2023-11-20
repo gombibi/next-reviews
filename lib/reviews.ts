@@ -2,11 +2,12 @@ import { marked } from "marked";
 import qs from 'qs';
 
 export interface Review {
-  slug: string,
-  title: string,
-  date: string,
-  image: string,
-  body: string,
+  slug: string;
+  title: string;
+  subtitle: string;
+  date: string;
+  image: string;
+  body: string;
 }
 
 interface FetchReviewsParam {
@@ -20,16 +21,17 @@ interface FetchReviewsParam {
 
 interface ReviewAttribute {
   attributes: {
-    slug: string,
-    title: string,
-    publishedAt: string,
+    slug: string;
+    title: string;
+    subtitle: string;
+    publishedAt: string;
     image: {
       data: {
         attributes: {
-          url: string
-        }
-      }
-    },
+          url: string;
+        };
+      };
+    };
   };
 }
 
@@ -121,6 +123,7 @@ function toReview(item: ReviewAttribute) {
   return {
     slug: attributes.slug,
     title: attributes.title,
+    subtitle: attributes.subtitle,
     date: attributes.publishedAt.slice(0, 'yyyy-mm-dd'.length),
     image: CMS_URL + attributes.image.data.attributes.url,
   };
