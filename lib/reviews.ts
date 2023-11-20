@@ -33,11 +33,6 @@ interface ReviewAttribute {
   };
 }
 
-export async function getFeaturedReview(): Promise<Review> {
-  const reviews = await getReviews();
-  return reviews[0];
-}
-
 const CMS_URL = 'http://localhost:1337';
 
 export async function getReview(slug: string): Promise<Review> {
@@ -71,7 +66,7 @@ export async function getReview(slug: string): Promise<Review> {
   };
 }
 
-export async function getReviews(): Promise<Review[]> {
+export async function getReviews(pageSize:number): Promise<Review[]> {
   //loading static data
   // const slugs = await getSlugs();
   // const reviews = [];
@@ -90,7 +85,7 @@ export async function getReviews(): Promise<Review[]> {
     fields: ['slug', 'title', 'subtitle', 'publishedAt'],
     populate: { image: { fields: ['url'] } },
     sort: ['publishedAt:desc'],
-    pagination: { pageSize: 6 },
+    pagination: { pageSize },
   });
   return data.map(toReview);
 }
