@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Heading from 'components/Heading';
 import ShareButtons from 'components/ShareButtons';
 import { getReview, getSlugs } from 'lib/reviews';
+import { notFound } from 'next/navigation';
 
 interface ReviewPageParams {
   slug: string;
@@ -29,6 +30,9 @@ export const dynamic = 'force-dynamic' // dynamic generate. <-> generateStaticPa
 
 export async function generateMetadata({ params: { slug } }: ReviewPageProps) {
   const review = await getReview(slug);
+  if(!review){
+    notFound()
+  }
   return {
     title: review.title,
   };
@@ -36,6 +40,9 @@ export async function generateMetadata({ params: { slug } }: ReviewPageProps) {
 
 export default async function ReviewPage({ params: { slug } }: ReviewPageProps) {
   const review = await getReview(slug);
+  if (!review) {
+    notFound();
+  }
   return (
     <>
       <Heading>{review.title}</Heading>

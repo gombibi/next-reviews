@@ -61,6 +61,9 @@ export async function getReview(slug: string): Promise<Review> {
     );
   const response = await fetch(url);
   const { data } = await response.json();
+  if(data.length === 0){
+    return null
+  }
   const item = data[0];
   return {
     ...toReview(item),

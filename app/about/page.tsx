@@ -4,6 +4,6 @@ export const metadata = {
   title: 'About',
 };
 
-export default function ReviewsPage() {
+export default function AboutPage() {
   return <Heading>About</Heading>;
 }
