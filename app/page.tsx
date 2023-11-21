@@ -5,7 +5,7 @@ import { metadata } from "./layout";
 import Image from "next/image";
 
 // export const dynamic = 'force-dynamic';
-export const revalidate = 30; //rerender in seconds
+// export const revalidate = 30; //rerender in seconds
 
 export default async function HomePage(){
   const reviews = await getReviews(3);

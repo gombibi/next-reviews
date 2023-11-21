@@ -3,7 +3,7 @@ import Card from "components/Card";
 import { Review, getReviews } from "lib/reviews";
 
 // export const dynamic = 'force-dynamic';
-export const revalidate = 30; //rerender in seconds
+// export const revalidate = 30; //rerender in seconds
 
 export const metadata = {
   title: 'Reviews',
