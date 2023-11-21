@@ -13,20 +13,20 @@ interface ReviewPageProps {
 }
 
 //dynamic randering
-export const dynamic = 'force-dynamic' // dynamic generate. <-> generateStaticParams()는 static generate
+// export const dynamic = 'force-dynamic' // dynamic generate. <-> generateStaticParams()는 static generate
 // export const dynamicParams = true;  // default true : included in generateStaticParams, if we add a new review in the CMS, Next.js generates on demend
 
 //static rendering
-// export async function generateStaticParams() {
-//  ['use client' 진입점]
-//  중첩된 컴포넌트에서 'use client' 을 명시한 파일의 모든 child components, imported modules은 클라이언트 번들의 일부로 간주됨
-//  따라서 client side rendering이 필요한 모든 컴포넌트에서 'use client'를 명시하지 않아도 됨.
-//  이 페이지에 사용해도 client side rendering이 필요한 ShareLinkButton(하위 컴포넌트)에 적용할 수 있으나,
-//  서버에서 동작하는 Node.js의 fs 모듈을 사용하고 있어(readdir(), readFile()) 명시할 수 없음.
-//  또한, 'use client'는 필요할 때만, 기능적으로 클라이언트 사이드를 사용하고 있는 컴포넌트에만 명시하는 것이 좋음
-//   const slugs = await getSlugs();
-//   return slugs.map(slug => ({ slug }));
-// }
+export async function generateStaticParams(): Promise<ReviewPageParams[]> {
+  //  ['use client' 진입점]
+  //  중첩된 컴포넌트에서 'use client' 을 명시한 파일의 모든 child components, imported modules은 클라이언트 번들의 일부로 간주됨
+  //  따라서 client side rendering이 필요한 모든 컴포넌트에서 'use client'를 명시하지 않아도 됨.
+  //  이 페이지에 사용해도 client side rendering이 필요한 ShareLinkButton(하위 컴포넌트)에 적용할 수 있으나,
+  //  서버에서 동작하는 Node.js의 fs 모듈을 사용하고 있어(readdir(), readFile()) 명시할 수 없음.
+  //  또한, 'use client'는 필요할 때만, 기능적으로 클라이언트 사이드를 사용하고 있는 컴포넌트에만 명시하는 것이 좋음
+  const slugs = await getSlugs();
+  return slugs.map(slug => ({ slug }));
+}
 
 export async function generateMetadata({ params: { slug } }: ReviewPageProps) {
   const review = await getReview(slug);
