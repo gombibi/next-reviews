@@ -35,6 +35,8 @@ interface ReviewAttribute {
   };
 }
 
+export const CACHE_TAG_REVIEWS = 'reviews'
+
 const CMS_URL = 'http://localhost:1337';
 
 export async function getReview(slug: string): Promise<Review> {
@@ -117,8 +119,9 @@ async function fetchReviews(param: FetchReviewsParam) {
   const response = await fetch(url, {
     // cache: 'no-store', //Next.js not to save any responses to the cache
     next: {
-      revalidate: 30, //seconds
-    }
+      // revalidate: 30, //seconds
+      tags: [CACHE_TAG_REVIEWS], //revalidate on demand instead of page level
+    },
   });
   if (!response.ok) {
     throw new Error(`CMS returned ${response.status} for ${url}`);

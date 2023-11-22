@@ -24,6 +24,7 @@ export async function generateStaticParams(): Promise<ReviewPageParams[]> {
   //  이 페이지에 사용해도 client side rendering이 필요한 ShareLinkButton(하위 컴포넌트)에 적용할 수 있으나,
   //  서버에서 동작하는 Node.js의 fs 모듈을 사용하고 있어(readdir(), readFile()) 명시할 수 없음.
   //  또한, 'use client'는 필요할 때만, 기능적으로 클라이언트 사이드를 사용하고 있는 컴포넌트에만 명시하는 것이 좋음
+  
   const slugs = await getSlugs();
   return slugs.map(slug => ({ slug }));
 }
