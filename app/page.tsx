@@ -8,13 +8,12 @@ import Image from "next/image";
 // export const revalidate = 30; //rerender in seconds
 
 export default async function HomePage(){
-  const reviews = await getReviews(3);
+  const { reviews } = await getReviews(3);
 
   return (
     <>
       <Heading>{metadata.title.default}</Heading>
       <p className='pb-3'>{metadata.description}</p>
-
       <ul>
         {reviews.map((review, index) => (
           <li key={review.slug} className='bg-white border rounded shadow w-80 hover:shadow-xl sm:w-full'>

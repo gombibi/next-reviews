@@ -10,12 +10,18 @@ export interface Review {
   body: string;
 }
 
+export interface PaginatedReviews {
+  pageCount: number;
+  reviews: Review[];
+}
+
 interface FetchReviewsParam {
   fields: string[];
   populate?: { image: { fields: string[] } };
   sort?: string[];
   pagination?: { 
-    pageSize: number //default = 25
+    pageSize: number, //default = 25
+    page?: number
   };
 }
 
@@ -73,7 +79,7 @@ export async function getReview(slug: string): Promise<Review> {
   };
 }
 
-export async function getReviews(pageSize:number): Promise<Review[]> {
+export async function getReviews(pageSize: number, page?: number): Promise<PaginatedReviews> {
   //loading static data
   // const slugs = await getSlugs();
   // const reviews = [];
@@ -88,13 +94,16 @@ export async function getReviews(pageSize:number): Promise<Review[]> {
   // });
 
   //fetching data by fetch api
-  const { data } = await fetchReviews({
+  const { data, meta } = await fetchReviews({
     fields: ['slug', 'title', 'subtitle', 'publishedAt'],
     populate: { image: { fields: ['url'] } },
     sort: ['publishedAt:desc'],
-    pagination: { pageSize },
+    pagination: { pageSize, page },
   });
-  return data.map(toReview);
+  return {
+    pageCount: meta.pagination.pageCount,
+    reviews: data.map(toReview),
+  };
 }
 
 export async function getSlugs(): Promise<string[]> {
