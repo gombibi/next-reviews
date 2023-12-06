@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import './globals.css';
-import NavBar from "components/NavBar";
+import NavBar from '@/components/NavBar';
 import { exo2, orbitron } from "./fonts";
 
 export const metadata = {

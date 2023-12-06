@@ -1,3 +1,4 @@
+import 'server-only'
 import { marked } from "marked";
 import qs from 'qs';
 
@@ -19,9 +20,12 @@ interface FetchReviewsParam {
   fields: string[];
   populate?: { image: { fields: string[] } };
   sort?: string[];
-  pagination?: { 
-    pageSize: number, //default = 25
-    page?: number
+  pagination?: {
+    pageSize: number; //default = 25
+    page?: number;
+  };
+  filters?: {
+    title: {}
   };
 }
 
@@ -40,6 +44,8 @@ interface ReviewAttribute {
     };
   };
 }
+
+export type SearchableReview = Pick<Review, 'slug' | 'title'>;
 
 export const CACHE_TAG_REVIEWS = 'reviews'
 
@@ -104,6 +110,19 @@ export async function getReviews(pageSize: number, page?: number): Promise<Pagin
     pageCount: meta.pagination.pageCount,
     reviews: data.map(toReview),
   };
+}
+
+export async function searchReviews(query: string): Promise<SearchableReview[]> {
+  const { data } = await fetchReviews({
+    filters: { title: { $containsi: query } },
+    fields: ['slug', 'title'],
+    sort: ['title'],
+    pagination: { pageSize: 5 },
+  });
+  return data.map(({ attributes }: ReviewAttribute) => ({
+    slug: attributes.slug,
+    title: attributes.title,
+  }));
 }
 
 export async function getSlugs(): Promise<string[]> {

@@ -1,4 +1,4 @@
-import { CACHE_TAG_REVIEWS } from "lib/reviews";
+import { CACHE_TAG_REVIEWS } from '@/lib/reviews';
 import { revalidateTag } from "next/cache";
 import { NextRequest } from "next/server";
 

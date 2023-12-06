@@ -1,5 +1,5 @@
-import Heading from "components/Heading";
-import { getReviews } from 'lib/reviews';
+import Heading from '@/components/Heading';
+import { getReviews } from '@/lib/reviews';
 import Link from "next/link";
 import { metadata } from "./layout";
 import Image from "next/image";

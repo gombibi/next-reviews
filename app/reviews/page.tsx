@@ -1,7 +1,8 @@
-import Heading from "components/Heading";
-import Card from "components/Card";
-import { Review, getReviews } from "lib/reviews";
-import PaginationBar from "components/PaginationBar";
+import Heading from "@/components/Heading";
+import Card from '@/components/Card';
+import { Review, getReviews, getSearchableReviews } from '@/lib/reviews';
+import PaginationBar from '@/components/PaginationBar';
+import SearchBox from '@/components/SearchBox';
 
 interface ReviewsPageProps {
   searchParams: { page?: string };
@@ -22,7 +23,10 @@ export default async function ReviewsPage({searchParams}: ReviewsPageProps) {
   return (
     <>
       <Heading>Reviews</Heading>
-      <PaginationBar href='/reviews' page={page} pageCount={pageCount}/>
+      <div className='flex justify-between'>
+        <PaginationBar href='/reviews' page={page} pageCount={pageCount} />
+        <SearchBox />
+      </div>
       <ul className='flex flex-row flex-wrap gap-3'>
         {reviews.map((review: Review, index) => (
           <Card
