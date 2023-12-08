@@ -23,12 +23,7 @@ module.exports = {
   //2. loading="lazy"
   images: {
     remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '1337',
-        pathname: '/uploads/**',
-      },
+      toRemotePattern(process.env.CMS_IMAGE_PATTERN),
     ],
     //  with static lendering(output: 'export'옵션)
     //  unoptimized: true,          //not running a Next.js server, image optimization 사용못함, but fetchpriority, lazy loading 가능
@@ -36,3 +31,13 @@ module.exports = {
     //  loaderFile: 'my-loader.js'  //pointing to the js file with my code. return a string(url)
   },
 };
+
+function toRemotePattern(urlString){
+  const url = new URL(urlString);
+  return {
+    protocol: url.protocol.replace(':', ''),
+    hostname: url.hostname,
+    port: url.port,
+    pathname: url.pathname,
+  };
+}

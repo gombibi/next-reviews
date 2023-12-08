@@ -49,7 +49,9 @@ export type SearchableReview = Pick<Review, 'slug' | 'title'>;
 
 export const CACHE_TAG_REVIEWS = 'reviews'
 
-const CMS_URL = 'http://localhost:1337';
+//Environment variable setting if using Windows Command Prompt : set
+//Nest.js supports .env files
+const CMS_URL = process.env.CMS_URL;
 
 export async function getReview(slug: string): Promise<Review> {
   //loading static data

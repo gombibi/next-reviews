@@ -31,7 +31,6 @@ export default function SearchBox() {
     router.push(`/reviews/${review.slug}`)
   }
 
-  console.log('searchbox', { query, debouncedQuery });
   if (!isClient) {
     return null;
   }

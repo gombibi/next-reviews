@@ -1,6 +1,6 @@
 import Heading from "@/components/Heading";
 import Card from '@/components/Card';
-import { Review, getReviews, getSearchableReviews } from '@/lib/reviews';
+import { Review, getReviews } from '@/lib/reviews';
 import PaginationBar from '@/components/PaginationBar';
 import SearchBox from '@/components/SearchBox';
 
