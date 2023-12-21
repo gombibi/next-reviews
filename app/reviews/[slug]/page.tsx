@@ -4,6 +4,8 @@ import Heading from '@/components/Heading';
 import ShareButtons from '@/components/ShareButtons';
 import { getReview, getSlugs } from '@/lib/reviews';
 import { notFound } from 'next/navigation';
+import CommentList from '@/components/CommentList';
+import CommentForm from '@/components/CommentForm';
 
 interface ReviewPageParams {
   slug: string;
@@ -60,6 +62,8 @@ export default async function ReviewPage({ params: { slug } }: ReviewPageProps) 
           <ChatBubbleBottomCenterTextIcon className='h-6 w-6' />
           Comments
         </h2>
+        <CommentForm title={review.title} />
+        <CommentList slug={slug} />
       </section>
     </>
   );
