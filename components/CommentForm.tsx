@@ -1,29 +1,61 @@
+'use client'
+
+import { createCommentAction } from "@/app/reviews/[slug]/actions";
+import { FormEvent, useState } from "react";
+
 export interface CommentFormProps {
+  slug: string;
   title: string;
 }
 
-export default function CommentForm({ title }: CommentFormProps) {
+export default function CommentForm({ slug, title }: CommentFormProps) {
+  const [state, setState] = useState({ loading: false, error: null });
+
+  const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setState({ loading: true, error: null });
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    // console.log(formData);
+    const result = await createCommentAction(formData);
+    if(result?.isError) {
+      setState({ loading: false, error: result });
+    }else{
+      form.reset();
+      setState({ loading: false, error: null });
+    }
+  }
+
   return (
-    <form className='border bg-white flex flex-col gap-2 mt-3 px-3 py-3 rounded'>
+    <form onSubmit={handleSubmit} className='border bg-white flex flex-col gap-2 mt-3 px-3 py-3 rounded'>
       <p className='pb-1'>
         Already played <strong>{title}</strong>? Have your say!
       </p>
+      <input type='hidden' name='slug' value={slug} />
       <div className='flex'>
         <label htmlFor='userField' className='shrink-0 w-32'>
           Your name
         </label>
-        <input id='userField' className='border px-2 py-1 rounded w-48' />
+        <input id='userField' name='user' className='border px-2 py-1 rounded w-48' />
       </div>
       <div className='flex'>
         <label htmlFor='messageField' className='shrink-0 w-32'>
           Your comment
         </label>
-        <textarea id='messageField' className='border px-2 py-1 rounded w-full' />
+        <textarea
+          id='messageField'
+          name='message'
+          className='border px-2 py-1 rounded w-full'
+        />
       </div>
+      {Boolean(state.error) && (
+        <p className="text-red-700">{state.error.message}</p>
+      )}
       <button
-        type='submit'
+        type='submit' disabled={state.loading}
         className='bg-orange-800 rounded px-2 py-1 self-center
-                   text-slate-50 w-32 hover:bg-orange-700'
+                   text-slate-50 w-32 hover:bg-orange-700
+                   disabled:bg-slate-500 disabled:cursor-not-allowed'
       >
         Submit
       </button>
