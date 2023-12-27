@@ -1,7 +1,7 @@
 'use client'
 
 import { createCommentAction } from "@/app/reviews/[slug]/actions";
-import { FormEvent, useState } from "react";
+import { useFormState } from "@/lib/hooks";
 
 export interface CommentFormProps {
   slug: string;
@@ -9,22 +9,9 @@ export interface CommentFormProps {
 }
 
 export default function CommentForm({ slug, title }: CommentFormProps) {
-  const [state, setState] = useState({ loading: false, error: null });
-
-  const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setState({ loading: true, error: null });
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    // console.log(formData);
-    const result = await createCommentAction(formData);
-    if(result?.isError) {
-      setState({ loading: false, error: result });
-    }else{
-      form.reset();
-      setState({ loading: false, error: null });
-    }
-  }
+  //alter: useFormState, useFormStatus [ref]https://react.dev/reference/react-dom/hooks/useFormState
+  //form action의 결과를 바탕으로 state 업데이트(에러 등)
+  const [state, handleSubmit] = useFormState(createCommentAction);
 
   return (
     <form onSubmit={handleSubmit} className='border bg-white flex flex-col gap-2 mt-3 px-3 py-3 rounded'>
@@ -42,17 +29,12 @@ export default function CommentForm({ slug, title }: CommentFormProps) {
         <label htmlFor='messageField' className='shrink-0 w-32'>
           Your comment
         </label>
-        <textarea
-          id='messageField'
-          name='message'
-          className='border px-2 py-1 rounded w-full'
-        />
+        <textarea id='messageField' name='message' className='border px-2 py-1 rounded w-full' />
       </div>
-      {Boolean(state.error) && (
-        <p className="text-red-700">{state.error.message}</p>
-      )}
+      {Boolean(state.error) && <p className='text-red-700'>{state.error.message}</p>}
       <button
-        type='submit' disabled={state.loading}
+        type='submit'
+        disabled={state.loading}
         className='bg-orange-800 rounded px-2 py-1 self-center
                    text-slate-50 w-32 hover:bg-orange-700
                    disabled:bg-slate-500 disabled:cursor-not-allowed'

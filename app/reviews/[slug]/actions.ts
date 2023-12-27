@@ -11,18 +11,18 @@ export interface ActionError {
 
 export type ActionFunction = (formData: FormData) => Promise<undefined | ActionError>;
 
-export async function createCommentAction(formData: FormData) {
+export async function createCommentAction(formData: FormData): Promise<undefined | ActionError> {
   const data: CreateCommentData = {
     slug: formData.get('slug') as string,
     user: formData.get('user') as string,
     message: formData.get('message') as string,
   };
   const error = validate(data);
-  if(error){
+  if (error) {
     return { isError: true, message: error };
   }
-  const message = createComment(data);
-  console.log('created:', message);
+  const comment = await createComment(data);
+  console.log('created:', comment);
   revalidatePath(`/reviews/${data.slug}`);
   redirect(`/reviews/${data.slug}`);
 }
